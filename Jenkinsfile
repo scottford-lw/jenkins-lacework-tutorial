@@ -1,9 +1,17 @@
 pipeline {
     agent any 
     stages {
-        stage('Stage 1') {
+        stage('Build Docker Image') {
+            when {
+                branch 'master'
+            }
             steps {
-                echo 'Hello world!' 
+                script {
+                    app = docker.build("sfordlacework/lacework-cli")
+                    app.inside {
+                        sh 'lacework --help'
+                    }
+                }
             }
         }
     }
