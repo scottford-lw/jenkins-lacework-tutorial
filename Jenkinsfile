@@ -7,7 +7,7 @@ pipeline {
             }
             steps {
                 script {
-                    app = docker.build("sfordlacework/lacework-cli")
+                    app = docker.build("$DOCKER_HUB/lacework-cli")
                     app.inside {
                         sh 'lacework --help'
                     }
@@ -28,6 +28,9 @@ pipeline {
             }
         }
         stage('Lacework Vulnerability Scan') {
+            environment {
+                LW_API_SECRET = credentials('lacework_api_secret')
+            }
             agent {
                 docker { image 'techallylw/lacework-cli:latest' }
             }
@@ -36,8 +39,7 @@ pipeline {
             }
             steps {
                 echo 'Running Lacework vulnerability scan'
-                // sh 'lacework vulnerability scan run index.docker.io selacework/sample-nodejs-app latest --poll --noninteractive'
-                sh 'env'
+                sh "lacework vulnerability scan run index.docker.io $DOCKER_HUB/lacework-cli latest --poll --noninteractive --details"
             }
         }
     }
