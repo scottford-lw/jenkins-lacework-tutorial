@@ -27,5 +27,18 @@ pipeline {
                 }
             }
         }
+        stage('Lacework Vulnerability Scan') {
+            agent {
+                docker { image 'techallylw/lacework-cli:latest' }
+            }
+            when {
+                branch 'master'
+            }
+            steps {
+                echo 'Running Lacework vulnerability scan'
+                // sh 'lacework vulnerability scan run index.docker.io selacework/sample-nodejs-app latest --poll --noninteractive'
+                sh 'env'
+            }
+        }
     }
 }
