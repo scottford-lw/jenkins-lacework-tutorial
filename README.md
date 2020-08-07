@@ -108,7 +108,7 @@ You can jump straight to Manage Jenkins / Configure System by clicking [here](ht
 1. Scroll down to Global Properties 
 2. Check the box next to Environment Variables, and add the three environment variables as follows:
 
-![Environment variables](images/environment_variables.png)
+![Environment variables](images/configure_env_vars.png)
 
 ### Credentials
 You will need to add your username and password for Docker Hub, as well as another type of credential Jenkins refers to as a **Secret Text** for your Lacework API Secret. You can jump right to that configuration page by clicking [here](http://localhost:8080/credentials/store/system/domain/_/newCredentials).
@@ -166,4 +166,39 @@ You can now copy the token to your clipboard and paste it back in Jenkins
 
 ![Paste Token](images/blue_ocean_paste_token.png)
 
-Once authenticated you should be able to navigate any of the Github Orgs you have access to so you can select the org where you forked the example Git repo at the beginning of the tutorial...
+Once authenticated you should be able to navigate any of the Github Orgs you have access to so you can select the location where you forked the example Git repo at the beginning of the tutorial. 
+
+Select the `jenkins-lacework-tutorial` and then click **"Create Pipeline"**
+
+At this point Jenkins will find the `Jenkinsfile` in the root of the repository and kick off the pipeline. 
+
+![Jenkins Running](images/blue_ocean_pipeline_running.png)
+
+You can click on the pipeline to watch the build, publish and finally the scan from Lacework!
+
+![Lacework Scan](images/lacework_scan.gif)
+
+The output here shows a human readable summary of the vulnerabilities found. If no vulnerabilities are found the output will reflect that as well. There is actually a ton of data that comes back via this API call, and we are really just scratching the surface. For more information on the Lacework CLI and what you can do with it click [here](https://github.com/lacework/go-sdk/wiki/CLI-Documentation).
+
+## Spinning Jenkins Down
+Once you are ready to tear down the test environment you have two options. 
+
+### Save the state
+If you are going to continue to play around with Jenkins as it is configured and want to save the state you can run the following command:
+
+```bash
+$ docker-compose -p lacework down
+```
+
+When you are ready to continue your work you just run:
+
+```bash
+$ docker-compose -p lacework up -d
+```
+
+### Delete State 
+If you want to complete tear down Jenkins and remove the docker volumes and network, run the following command:
+
+```bash
+$ docker-compose -p lacework down --volumes
+```
