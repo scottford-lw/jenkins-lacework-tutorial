@@ -29,7 +29,7 @@ services:
       - jenkins-docker-certs:/certs/client:ro
     networks:
       - jenkins
-volumes:
+volumes: 
   jenkins-docker-certs:
   jenkins-data:
 networks:
