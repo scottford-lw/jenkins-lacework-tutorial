@@ -32,14 +32,14 @@ pipeline {
                 LW_API_SECRET = credentials('lacework_api_secret')
             }
             agent {
-                docker { image 'techallylw/lacework-cli:latest' }
+                docker { image 'lacework/lacework-cli:latest' }
             }
             when {
                 branch 'master'
             }
             steps {
                 echo 'Running Lacework vulnerability scan'
-                sh "lacework vulnerability scan run index.docker.io $DOCKER_HUB/lacework-cli latest --poll --noninteractive --details"
+                sh "lacework vulnerability container scan index.docker.io $DOCKER_HUB/lacework-cli latest --poll --noninteractive --details"
             }
         }
     }
