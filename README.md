@@ -94,6 +94,10 @@ Once Jenkins restarts you can login with `admin/<admin password>`
 ## Configuring Jenkins
 With Jenkins running locally we are ready to configure the pipeline. The repository that you cloned has a Jenkinsfile that already defines the pipeline we are going to run. That Jenkinsfile makes use of both Environment Variables and Secret Credentials that we will need to set up before configuring the job. Let’s get those going...
 
+## Install Docker Plugins
+You will need to install Docker Plugin and Docker Pipeline plugins. Go to the [Manage Jenkins plugins] http://localhost:8080/pluginManager/ page. Search for
+Docker and Docker Pipeline plugins.
+
 ### Environment Variables
 We are going to define three global environments variables. Those variables are as follows:
 
